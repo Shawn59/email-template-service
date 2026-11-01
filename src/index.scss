@@ -1,0 +1,28 @@
+@font-face {
+  font-family: $font-regular;
+  src: local($font-regular),
+  url(/src/fonts/Nunito-Regular.ttf);
+  font-display: swap;
+}
+
+@font-face {
+  font-family: $font-medium;
+  src: local($font-medium),
+  url(/src/fonts/Nunito-Medium.ttf);
+  font-display: swap;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  min-width: 320px;
+  min-height: 100vh;
+  width: 100%;
+}
+
+* {
+  font-family: $font-regular;
+  color: $text-default;
+  box-sizing: border-box;
+  font-size: 14px;
+}

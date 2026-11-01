@@ -1,0 +1,14 @@
+.button {
+  &.Orange {
+    background: $orange-1;
+  }
+
+  &.Small {
+    padding: 7px;
+    min-width: 34px;
+
+    :global(.MuiButton-icon) {
+      margin: 0;
+    }
+  }
+}
