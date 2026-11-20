@@ -4,6 +4,7 @@ import { Auth } from '@components';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { actionLogout, actionSetUser } from '../../store/userSlice/user.slice';
 import WelcomeEmail from '../../_components/Emails/WelcomeEmail/WelcomeEmail.tsx';
+import { EmailPreview } from '../../_components/Emails/EmailPreview/EmailPreview';
 import { meRequest } from '../../api/auth';
 
 export const Main = () => {
@@ -50,7 +51,11 @@ export const Main = () => {
 
   return (
     <section className={styles.main}>
-      {user ? <WelcomeEmail name={user.login} verificationUrl={'dsfsd'} /> : <Auth />}
+      {user ? (
+        <EmailPreview component={WelcomeEmail} props={{ name: user.login, verificationUrl: 'dsfsd' }} />
+      ) : (
+        <Auth />
+      )}
     </section>
   );
 };
