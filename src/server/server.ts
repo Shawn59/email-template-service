@@ -1,9 +1,13 @@
+import 'dotenv/config';
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
+import cookie from '@fastify/cookie';
 import { env } from '../config/env.ts';
-import { errorHandler } from './plugins/errorHandler';
-import { templatesRoutes } from './routes/templates';
-import { healthRoutes } from './routes/health';
+import { errorHandler } from '../plugins/errorHandler.ts';
+import { authPlugin } from './plugins/auth.ts';
+import { authRoutes } from '../routes/auth.ts';
+import { templatesRoutes } from '../routes/templates.ts';
+import { healthRoutes } from '../routes/health.ts';
 
 const app = Fastify({
   logger: {
@@ -13,30 +17,29 @@ const app = Fastify({
   disableRequestLogging: env.NODE_ENV === 'production',
 });
 
-// CORS — разрешаем админке и другим сервисам обращаться к API
 await app.register(cors, {
   origin: env.CORS_ORIGIN === '*' ? true : env.CORS_ORIGIN.split(','),
   methods: ['GET', 'POST'],
+  credentials: true,
 });
 
-// Единый обработчик ошибок
+await app.register(cookie);
 await app.register(errorHandler);
+await app.register(authPlugin);
 
-// Роуты
 await app.register(healthRoutes);
+await app.register(authRoutes);
 await app.register(templatesRoutes);
 
-// Запуск
 try {
   await app.listen({ port: env.PORT, host: env.HOST });
-  app.log.info(`📧 Email template service ready at http://${env.HOST}:${env.PORT}`);
-  app.log.info(`   Preview: http://${env.HOST}:${env.PORT}/api/templates`);
+  app.log.info(`Email template service ready at http://${env.HOST}:${env.PORT}`);
+  app.log.info(`Preview: http://${env.HOST}:${env.PORT}/api/templates`);
 } catch (err) {
   app.log.error(err);
   process.exit(1);
 }
 
-// Graceful shutdown
 const close = async (signal: string) => {
   app.log.info(`${signal} received, shutting down...`);
   await app.close();

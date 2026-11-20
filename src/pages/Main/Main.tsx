@@ -1,34 +1,56 @@
 import styles from './Main.module.scss';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Auth } from '@components';
-import { constants } from '../../constants';
-import { useDispatch } from 'react-redux';
-import { actionSetUser } from '../../store/userSlice/user.slice';
-import { useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { actionLogout, actionSetUser } from '../../store/userSlice/user.slice';
 import WelcomeEmail from '../../_components/Emails/WelcomeEmail/WelcomeEmail.tsx';
+import { meRequest } from '../../api/auth';
 
 export const Main = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user.user);
+  const [checkingSession, setCheckingSession] = useState(true);
 
   useEffect(() => {
-    const userInfo = localStorage.getItem(constants.localStorage.USER_INFO);
+    let cancelled = false;
 
-    if (userInfo) {
+    const checkSession = async () => {
       try {
-        dispatch(actionSetUser(JSON.parse(userInfo)));
-      } catch (error) {
-        console.error('Невалидные данные для userInfo', error);
+        const sessionUser = await meRequest();
 
-        localStorage.removeItem(constants.localStorage.USER_INFO);
+        if (cancelled) return;
+
+        if (sessionUser) {
+          dispatch(actionSetUser(sessionUser));
+        } else {
+          dispatch(actionLogout());
+        }
+      } catch (error) {
+        console.error('Не удалось проверить сессию', error);
+        if (!cancelled) {
+          dispatch(actionLogout());
+        }
+      } finally {
+        if (!cancelled) {
+          setCheckingSession(false);
+        }
       }
-    }
+    };
+
+    void checkSession();
+
+    return () => {
+      cancelled = true;
+    };
   }, [dispatch]);
 
-  /* return <section className={styles.main}>{user ? <Chat className={styles.chatContainer} /> : <Auth />}</section>;*/
+  if (checkingSession) {
+    return <section className={styles.main}>{'Проверка сессии...'}</section>;
+  }
+
   return (
     <section className={styles.main}>
-      {user ? <WelcomeEmail name={'Бтн немй'} verificationUrl={'dsfsd'} /> : <Auth />}
+      {user ? <WelcomeEmail name={user.login} verificationUrl={'dsfsd'} /> : <Auth />}
     </section>
   );
 };

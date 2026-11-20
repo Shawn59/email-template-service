@@ -1,5 +1,6 @@
 import type { FastifyPluginAsync } from 'fastify';
-import { env } from '../config/env';
+import { env } from '../config/env.ts';
+
 export const errorHandler: FastifyPluginAsync = async (app) => {
   app.setErrorHandler((error, request, reply) => {
     request.log.error({ err: error }, 'Request failed');

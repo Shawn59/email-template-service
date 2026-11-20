@@ -2,7 +2,8 @@ import type { FastifyPluginAsync } from 'fastify';
 import { render } from '@react-email/render';
 import { toPlainText } from '@react-email/render';
 import { createElement } from 'react';
-import { getTemplate, listTemplates } from '../registry';
+import { getTemplate, listTemplates } from '../registry.ts';
+import { requireAuth } from '../server/plugins/auth.ts';
 
 interface RenderParams {
   id: string;
@@ -13,6 +14,8 @@ interface RenderQuery {
 }
 
 export const templatesRoutes: FastifyPluginAsync = async (app) => {
+  app.addHook('preHandler', requireAuth);
+
   /**
    * GET /api/templates
    * Список всех шаблонов с метаданными
