@@ -4,7 +4,7 @@ import { HeaderEmail } from './HeaderEmail/HeaderEmail.tsx';
 import { FooterEmail } from './FooterEmail/FooterEmail.tsx';
 
 interface EmailLayoutProps {
-  preview: string;
+  titleH1: string;
   children: ReactNode;
 }
 
@@ -24,13 +24,17 @@ const container = {
   boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
 };
 
-export const EmailLayout = ({ preview, children }: EmailLayoutProps) => (
+const urlImage = 'https://mymanager.stoking.ru/images/mail/logo_stoking.ico'
+
+export const EmailLayout = ({ titleH1, children }: EmailLayoutProps) => (
   <Html lang="ru">
     <Head>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
+      <link rel="shortcut icon" href={urlImage} />
     </Head>
-    <Preview>{preview}</Preview>
+    <Preview>{titleH1}</Preview>
+
     <Body style={body}>
       <Container style={container}>
         <HeaderEmail />
