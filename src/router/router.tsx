@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { MainLayout } from '@layout';
 import { Error, Main } from '@pages';
 
-export const routerData = [{ id: 1, label: 'Чат', path: '/', element: <Main /> }];
+export const routerData = [{ id: 1, label: 'Главная', path: '/', element: <Main /> }];
 
 export const router = createBrowserRouter([
   {

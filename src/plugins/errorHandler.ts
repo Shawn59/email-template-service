@@ -1,11 +1,10 @@
-import type { FastifyPluginAsync } from 'fastify';
+import type { FastifyError, FastifyPluginAsync } from 'fastify';
 import { env } from '../config/env.ts';
 
 export const errorHandler: FastifyPluginAsync = async (app) => {
-  app.setErrorHandler((error, request, reply) => {
+  app.setErrorHandler((error: FastifyError, request, reply) => {
     request.log.error({ err: error }, 'Request failed');
 
-    // Ошибки валидации Fastify
     if (error.validation) {
       return reply.status(400).send({
         error: 'Validation error',

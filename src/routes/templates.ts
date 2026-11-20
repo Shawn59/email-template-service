@@ -51,7 +51,7 @@ export const templatesRoutes: FastifyPluginAsync = async (app) => {
         return reply.status(400).send({
           error: 'Invalid template variables',
           templateId: entry.id,
-          issues: parsed.error.issues.map((i) => ({
+          issues: parsed.error.issues.map((i: { path: PropertyKey[]; message: string; code: string }) => ({
             path: i.path.join('.'),
             message: i.message,
             code: i.code,

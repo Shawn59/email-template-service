@@ -26,8 +26,6 @@
 
     "baseUrl": "./",
     "paths": {
-      "@atoms": ["src/_atoms"],
-      "@molecules": ["src/_molecules"],
       "@components": ["src/_components"],
       "@layout": ["src/layout"],
       "@pages": ["src/pages"],
