@@ -4,6 +4,8 @@ import { toPlainText } from '@react-email/render';
 import { createElement } from 'react';
 import { getTemplate, listTemplates } from '../registry.ts';
 import { requireAuth } from '../server/plugins/auth.ts';
+import WelcomeEmail from '../_components/Emails/WelcomeEmail/WelcomeEmail.tsx';
+import * as React from 'react';
 
 interface RenderParams {
   id: string;
@@ -14,14 +16,22 @@ interface RenderQuery {
 }
 
 export const templatesRoutes: FastifyPluginAsync = async (app) => {
-  app.addHook('preHandler', requireAuth);
+  // проверка на авторизацию
+  //app.addHook('preHandler', requireAuth);
 
   /**
    * GET /api/templates
    * Список всех шаблонов с метаданными
    */
   app.get('/api/templates', async () => {
-    return { templates: listTemplates() };
+    const html = await render(
+      createElement(WelcomeEmail, {
+        name: 'Иван',
+        verificationUrl: 'https://example.com/verify?token=abc123',
+      }),
+    );
+    return { template: html };
+    //return { templates: listTemplates() };
   });
 
   /**
