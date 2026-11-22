@@ -1,4 +1,5 @@
 import { Img, Link, Row, Column, Section } from 'react-email';
+import * as React from 'react';
 
 const headerSection = {
   padding: '24px 32px',

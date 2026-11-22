@@ -1,6 +1,7 @@
 import { Heading, Section, Text } from 'react-email';
 import { EmailButton } from '../EmailButton/EmailButton';
 import { EmailLayout } from '../EmailLayout/EmailLayout';
+import * as React from 'react';
 
 interface WelcomeEmailProps {
   name: string;
@@ -42,7 +43,8 @@ const note = {
 };
 
 export const WelcomeEmail = ({ name, verificationUrl }: WelcomeEmailProps) => (
-  <EmailLayout  titleH1={`Добро пожаловать, ${name}! Остался один шаг.`}>
+  <EmailLayout titleH1={`Добро пожаловать, ${name}! Остался один шаг.`}>
+    <div>dsfdsf</div>
     <Section style={contentSection}>
       <Heading style={heading}>Добро пожаловать, {name}! 👋</Heading>
 
@@ -70,5 +72,3 @@ export const WelcomeEmail = ({ name, verificationUrl }: WelcomeEmailProps) => (
     </Section>
   </EmailLayout>
 );
-
-export default WelcomeEmail;

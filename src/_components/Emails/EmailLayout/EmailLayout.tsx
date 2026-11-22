@@ -2,6 +2,7 @@ import { Body, Container, Head, Html, Preview } from 'react-email';
 import type { ReactNode } from 'react';
 import { HeaderEmail } from './HeaderEmail/HeaderEmail.tsx';
 import { FooterEmail } from './FooterEmail/FooterEmail.tsx';
+import * as React from 'react';
 
 interface EmailLayoutProps {
   titleH1: string;
@@ -24,7 +25,7 @@ const container = {
   boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
 };
 
-const urlImage = 'https://mymanager.stoking.ru/images/mail/logo_stoking.ico'
+const urlImage = 'https://mymanager.stoking.ru/images/mail/logo_stoking.ico';
 
 export const EmailLayout = ({ titleH1, children }: EmailLayoutProps) => (
   <Html lang="ru">

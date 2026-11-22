@@ -1,4 +1,5 @@
 import { Hr, Link, Section, Text } from 'react-email';
+import * as React from 'react';
 
 const footerSection = {
   padding: '24px 32px',

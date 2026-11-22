@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Auth } from '@components';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { actionLogout, actionSetUser } from '../../store/userSlice/user.slice';
-import WelcomeEmail from '../../_components/Emails/WelcomeEmail/WelcomeEmail.tsx';
+import { WelcomeEmail } from '../../_components/Emails/WelcomeEmail/WelcomeEmail.tsx';
 import { EmailPreview } from '../../_components/Emails/EmailPreview/EmailPreview';
 import { meRequest } from '../../api/auth';
 
