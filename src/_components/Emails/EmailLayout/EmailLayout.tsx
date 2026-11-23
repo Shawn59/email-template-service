@@ -34,6 +34,7 @@ export const EmailLayout = ({ titleH1, children }: EmailLayoutProps) => (
       <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
       <link rel="shortcut icon" href={urlImage} />
     </Head>
+{/*    Preview - короткое описание, которое почтовый клиент показывает в списке писем рядом с темой (inbox snippet).*/}
     <Preview>{titleH1}</Preview>
 
     <Body style={body}>

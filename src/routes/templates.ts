@@ -5,7 +5,7 @@ import { createElement } from 'react';
 import { getTemplate, listTemplates } from '../registry.ts';
 import { requireAuth } from '../server/plugins/auth.ts';
 import { WelcomeEmail } from '../_components/Emails/WelcomeEmail/WelcomeEmail.tsx';
-import * as React from 'react';
+import { TestEmail } from '../_components/Emails/TestEmail/TestEmail.tsx';
 
 interface RenderParams {
   id: string;
@@ -34,10 +34,12 @@ export const templatesRoutes: FastifyPluginAsync = async (app) => {
     //return { templates: listTemplates() };
   });
 
-  app.get('/api/templates/test', async () => {
+  app.get('/api/templates/test', async (request) => {
     /* const html = await render(createElement('div', null, 'test'));*/
+
+    console.log('params = ', request.params);
     const html = await render(
-      createElement(WelcomeEmail, {
+      createElement(TestEmail, {
         name: 'Иван',
         verificationUrl: 'https://example.com/verify?token=abc123',
       }),

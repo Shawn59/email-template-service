@@ -44,7 +44,6 @@ const note = {
 
 export const WelcomeEmail = ({ name, verificationUrl }: WelcomeEmailProps) => (
   <EmailLayout titleH1={`Добро пожаловать, ${name}! Остался один шаг.`}>
-    <div>dsfdsf</div>
     <Section style={contentSection}>
       <Heading style={heading}>Добро пожаловать, {name}! 👋</Heading>
 
